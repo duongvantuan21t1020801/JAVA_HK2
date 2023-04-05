@@ -1,0 +1,147 @@
+//ham main
+import java.sql.*;
+
+public class main {
+
+public static void main(String[] args) {
+
+try {
+
+//Buoc 1: mo ket noi
+
+//1.1 Chỉ định Driver để kết nối
+
+//1.2 Kết nối
+
+Connection con = BaseConnect.getConnect();
+
+//Buoc 2: truy van du lieu
+
+// Lấy toàn bộ danh sách lớp học
+
+String sql = "SELECT * FROM LOPHOC";
+
+Statement state = con.createStatement();
+
+ResultSet rs = state.executeQuery(sql);
+
+while (rs.next()) {
+
+int id = rs.getInt("ID");
+
+String tenLop = rs.getString("TenLop");
+
+System.out.printf("ID=%d, TenLop=%s\n", id, tenLop);
+
+}
+
+int countLop = rs.getRow();
+
+System.out.println("Tổng số lớp học là: " + countLop);
+
+//Buoc 3: Dong ket noi
+
+con.close();
+
+}catch (Exception ex) {
+
+System.out.print("Lỗi rồi. Chi tiết lỗi: " + ex.getMessage());
+
+}
+
+}
+
+}
+
+//class LopHoc
+package Entity;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LopHoc {
+private int id;
+private String tenLop;
+public LopHoc(int id, String tenLop) {
+super();
+this.id = id;
+this.tenLop = tenLop;
+}
+private static Connection getConnection() throws ClassNotFoundException, SQLException{
+Class.forName("org.sqlite.JDBC");
+String conString = "jdbc:sqlite::resource:quanlysinhvien.db";
+Connection con = DriverManager.getConnection(conString, "", "");
+return con;
+}
+public static List<LopHoc> getList() throws ClassNotFoundException, SQLException{
+Connection con = getConnection();
+List<LopHoc>Is = new ArrayList<>();
+
+String sql = "SELECT * FROM LOPHOC";
+Statement state = con.createStatement();
+ResultSet rs = state.executeQuery(sql);
+while(rs.next()) {
+int id = rs.getInt("ID");
+String tenLop = rs.getString("TenLop");
+Is.add(new LopHoc(id, tenLop));
+}
+con.close();
+return Is;
+
+}
+public static LopHoc getByID(int id) throws ClassNotFoundException, SQLException{
+
+Connection con = getConnection();
+String sql = "SELECT * FROM LOPHOC WHERE ID = " +id;
+Statement state = con.createStatement();
+ResultSet rs = state.executeQuery(sql);
+if (rs.next()) {
+
+String tenLop = rs.getString("TenLop");
+LopHoc lop = new LopHoc(id, tenLop);
+con.close();
+return lop;
+}
+else con.close();
+return null;
+}
+
+
+
+@Override
+public String toString() {
+
+return String.format("Lop(%d,$s)", id , tenLop);
+}
+}
+
+
+//entity
+package Entity;
+
+import java.sql.Connection;
+
+import java.sql.DriverManager;
+
+import java.sql.SQLException;
+
+public class BaseConnect {
+
+private static Connection getConnection() throws ClassNotFoundException, SQLException{
+
+Class.forName("org.sqlite.JDBC");
+
+String conString = "jdbc:sqlite::resource:quanlysinhvien.db";
+
+Connection con = DriverManager.getConnection(conString, "", "");
+
+return con;
+
+}
+
+}
