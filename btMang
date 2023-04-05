@@ -1,0 +1,91 @@
+import java.util.Scanner;
+
+public class BTMang {
+public static float[] NhapMang() {
+int n;
+Scanner scan = new Scanner(System.in) {
+System.out.print("Nhap n: ");
+n = scan.nextInt();
+
+float mang[] = new float[n];
+for (int i = 0; i < n; i++) {
+System.out.printf("Nhap mang[%d]: ", i);
+mang[i] = scan.nextFloat();
+}
+return mang;
+
+}
+public static void XuatMang(float mang[]) {
+System.out.print("\nMang: ");
+for(int i =0;i<mang.length;i++)
+System.out.print(mang[i] + " ");
+}
+public static float TongMang(float mang[]) {
+float s = 0;
+for (int i = 0; i < mang.length; i++)
+s += mang[i];
+return s;
+}
+static float Min (float mang[]) {
+float m = Float.MAX_VALUE;
+for(int i=0;i<mang.length;i++)
+if (m > mang[i])
+m = mang[i];
+return m;
+}
+static float Max (float mang[]) {
+float m = Float.MIN_VALUE;
+for(int i=0;i<mang.length;i++)
+if (m < mang[i])
+m = mang[i];
+return m;
+}
+static float avarage (float mang[]) {
+
+}
+public static float[] MinMaxAverage (float mang[]) {
+float rs[] = new float[3];
+rs[0] = min(mang);
+rs[1] = max(mang);
+rs[2] = average(mang);
+return rs
+}
+public static int[][] NhapMaTran(){
+int cot, dong;
+int [][] A;
+Scanner scanner = new Scanner(System.in) {
+System.out.print("Nhap so dong: ");
+dong = scanner.nextInt();
+System.out.print("Nhap so cot: ");
+cot = scanner.nextInt();
+A = new int[dong][cot];
+for (int i = 0; i < dong; i++)
+for (int j = 0; j < cot; j++) {
+System.out.printf("A[%d] [%d]=", i, j);
+A[i][j] = scanner.nextInt();
+}
+}
+return A;
+}
+public static void XuatMaTran(int[][] maTran) {
+for (int i = 0; i < maTran.length; i++) {
+
+for (int j = 0; j < maTran[i].length; j++)
+System.out.printf("%d", maTran[i][j]);
+}
+System.out.println();
+}
+public static int[][] Tong2MaTran(int[][] mt1, int[][] mt2){
+int dong = mt1.length;
+int cot = mt1[0].length;
+int [][] rs = new int[cot][dong];
+
+for (int i = 0; i < dong; i++) {
+
+for (int j = 0; j < cot; j++)
+rs[i][j] = mt1[i][j] + mt2[i][j];
+}
+return rs;
+
+}
+}
