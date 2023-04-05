@@ -1,0 +1,79 @@
+package Entity;
+
+import java.util.List;
+
+import java.util.Scanner;
+
+public class Person {
+
+private String msv, ho, ten, ngaySinh, noiSinh;
+
+private int gioiTinh;
+
+private String queQuan;
+
+public Person (String msv, String ho, String ten, String ngaySinh, String noiSinh)
+
+super();
+
+this.msv = msv;
+
+this.ho = ho;
+
+this.ten = ten;
+
+this.ngaySinh = ngaySinh;
+
+this.noiSinh = noiSinh;
+
+this.gioiTinh = gioiTinh;
+
+this.queQuan = queQuan;
+
+}
+
+public static Person parse(String str) {
+
+//17T1021001|Nguyễn Văn Tuấn|01/01/1995|TT Huế|1|Đà Nẵng
+
+String[] rs = str.split("\\|");
+
+int gt = Integer.parseInt(rs[5]);
+
+Person p = new Person(rs[0], rs[1], rs[2], rs[3], rs[4], gt, rs[6]);
+
+return p;
+
+}
+
+public static List<Person> parseFromFile(String filePath){
+
+File file = new File(filePath);
+
+Scanner scanner = new Scanner(file);
+
+List<Person> ls = new ArrayList<>();
+
+while(scanner.hasNext()) {
+
+String line = scanner.nextLine();
+
+Person p = Person.parse(line, "@");
+
+ls.add(p);
+
+}
+
+scanner.close();
+
+return ls;
+
+}
+
+@Override
+
+public String toString() {
+
+return String.format("Person[msv=%s, ho ten=%s %s)
+
+}
